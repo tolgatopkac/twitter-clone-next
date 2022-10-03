@@ -12,7 +12,18 @@ export const authOptions = {
   ],
 
   pages: {
-    signin: "/auth/sign-in",
+    signIn: "/auth/signin",
+  },
+  // create username from google account
+  callbacks: {
+    async session({ session, token }) {
+      session.user.username = session.user.name
+        .split(" ")
+        .join("")
+        .toLocaleLowerCase();
+      session.user.uid = token.sub;
+      return session;
+    },
   },
 };
 
